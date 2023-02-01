@@ -23,7 +23,11 @@ abstract class MacosFilePickerPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<List<String>?> pick({bool? allowsMultiple, bool? folder}) {
+  Future<List<String>?> pick(
+      {bool? allowsMultiple,
+      bool? folder,
+      bool? saveFile,
+      String? defaultName}) {
     throw UnimplementedError('pick() has not been implemented.');
   }
 }

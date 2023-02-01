@@ -28,14 +28,17 @@ class _MyAppState extends State<MyApp> {
         body: Column(
           children: [
             OutlinedButton(
-                onPressed: () => _pick(false, false),
+                onPressed: () => _pick(false, false, false),
                 child: const Text('File')),
             OutlinedButton(
-                onPressed: () => _pick(true, false),
+                onPressed: () => _pick(true, false, false),
                 child: const Text('Multiple files')),
             OutlinedButton(
-                onPressed: () => _pick(false, true),
+                onPressed: () => _pick(false, true, false),
                 child: const Text('Folder')),
+            OutlinedButton(
+                onPressed: () => _pick(false, false, true),
+                child: const Text('Save file')),
             Text(_output)
           ],
         ),
@@ -43,9 +46,12 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  Future<void> _pick(bool allowsMultiple, bool folder) async {
+  Future<void> _pick(bool allowsMultiple, bool folder, bool saveFile) async {
     var res = await _macosFilePickerPlugin.pick(
-        allowsMultiple: allowsMultiple, folder: folder);
+        allowsMultiple: allowsMultiple,
+        folder: folder,
+        saveFile: saveFile,
+        defaultName: saveFile ? 'myName' : null);
     setState(() {
       _output = res == null ? 'Cancelled' : res.toString();
     });
