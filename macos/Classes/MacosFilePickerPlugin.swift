@@ -25,10 +25,10 @@ public class MacosFilePickerPlugin: NSObject, FlutterPlugin {
       let res = panel.runModal()
       if res == .OK {
         if (allowsMultiple) {
-          result(panel.urls.map{ $0.absoluteString })
+          result(panel.urls.map{ $0.path })
         } else {
           if let url = panel.url {
-            result([url.absoluteString])
+            result([url.path])
           } else {
             result(nil)
           }
