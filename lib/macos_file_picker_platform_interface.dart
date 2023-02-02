@@ -2,6 +2,8 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'macos_file_picker_method_channel.dart';
 
+enum MacosFilePickerMode { file, folder, fileAndFolder, saveFile }
+
 abstract class MacosFilePickerPlatform extends PlatformInterface {
   /// Constructs a MacosFilePickerPlatform.
   MacosFilePickerPlatform() : super(token: _token);
@@ -23,11 +25,8 @@ abstract class MacosFilePickerPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<List<String>?> pick(
-      {bool? allowsMultiple,
-      bool? folder,
-      bool? saveFile,
-      String? defaultName}) {
+  Future<List<String>?> pick(MacosFilePickerMode mode,
+      {String? defaultName, bool? allowsMultiple}) {
     throw UnimplementedError('pick() has not been implemented.');
   }
 }

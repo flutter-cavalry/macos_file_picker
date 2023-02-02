@@ -10,16 +10,12 @@ class MethodChannelMacosFilePicker extends MacosFilePickerPlatform {
   final methodChannel = const MethodChannel('macos_file_picker');
 
   @override
-  Future<List<String>?> pick(
-      {bool? allowsMultiple,
-      bool? folder,
-      bool? saveFile,
-      String? defaultName}) {
+  Future<List<String>?> pick(MacosFilePickerMode mode,
+      {String? defaultName, bool? allowsMultiple}) {
     return methodChannel.invokeListMethod<String>('pick', {
-      'allowsMultiple': allowsMultiple ?? false,
-      'folder': folder ?? false,
-      'saveFile': saveFile ?? false,
-      'defaultName': defaultName
+      'mode': mode.index,
+      'defaultName': defaultName,
+      'allowsMultiple': allowsMultiple
     });
   }
 }

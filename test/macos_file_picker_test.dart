@@ -7,13 +7,15 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 class MockMacosFilePickerPlatform
     with MockPlatformInterfaceMixin
     implements MacosFilePickerPlatform {
-
   @override
-  Future<String?> getPlatformVersion() => Future.value('42');
+  Future<List<String>?> pick(MacosFilePickerMode mode,
+          {String? defaultName, bool? allowsMultiple}) =>
+      Future.value(['1', '2']);
 }
 
 void main() {
-  final MacosFilePickerPlatform initialPlatform = MacosFilePickerPlatform.instance;
+  final MacosFilePickerPlatform initialPlatform =
+      MacosFilePickerPlatform.instance;
 
   test('$MethodChannelMacosFilePicker is the default instance', () {
     expect(initialPlatform, isInstanceOf<MethodChannelMacosFilePicker>());
@@ -24,6 +26,7 @@ void main() {
     MockMacosFilePickerPlatform fakePlatform = MockMacosFilePickerPlatform();
     MacosFilePickerPlatform.instance = fakePlatform;
 
-    expect(await macosFilePickerPlugin.getPlatformVersion(), '42');
+    expect(
+        await macosFilePickerPlugin.pick(MacosFilePickerMode.file), ['1', '2']);
   });
 }

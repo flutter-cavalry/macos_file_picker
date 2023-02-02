@@ -1,6 +1,8 @@
 import Cocoa
 import FlutterMacOS
 
+enum MacosFilePickerMode: Int { case file, folder, fileAndFolder, saveFile }
+
 public class MacosFilePickerPlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
     let channel = FlutterMethodChannel(name: "macos_file_picker", binaryMessenger: registrar.messenger)
@@ -16,11 +18,10 @@ public class MacosFilePickerPlugin: NSObject, FlutterPlugin {
     switch call.method {
     case "pick":
       // Arguments are enforced on dart side.
+      let mode = MacosFilePickerMode(rawValue: args["mode"] as! Int)
       let allowsMultiple = args["allowsMultiple"] as? Bool ?? false
-      let folder = args["folder"] as? Bool ?? false
-      let saveFile = args["saveFile"] as? Bool ?? false
 
-      if saveFile {
+      if mode == .saveFile {
         let panel = NSSavePanel()
         if let defaultName = args["defaultName"] as? String {
           panel.nameFieldStringValue = defaultName
@@ -38,8 +39,8 @@ public class MacosFilePickerPlugin: NSObject, FlutterPlugin {
       } else {
         let panel = NSOpenPanel()
         panel.allowsMultipleSelection = allowsMultiple
-        panel.canChooseFiles = !folder
-        panel.canChooseDirectories = folder
+        panel.canChooseFiles = mode == .file || mode == .fileAndFolder
+        panel.canChooseDirectories = mode == .folder || mode == .fileAndFolder
         let res = panel.runModal()
         if res == .OK {
           if (allowsMultiple) {
