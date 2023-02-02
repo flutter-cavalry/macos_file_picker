@@ -1,15 +1,43 @@
-# macos_file_picker
+[![pub package](https://img.shields.io/pub/v/macos_file_picker.svg)](https://pub.dev/packages/macos_file_picker)
 
-A new Flutter plugin project.
+Opens native macOS dialogs to pick files or folders. Features:
 
-## Getting Started
+- Pick a single or multiple files, folders and both.
+- Pick a file to save.
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+## Usage
 
-For help getting started with Flutter development, view the
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```dart
+///
+/// Open a macOS dialog based on the given arguments.
+///
+/// [mode]:
+///   file: pick files.
+///   folder: pick folders.
+///   fileAndFolder: pick files and folders.
+///   saveFile: pick a file saving path.
+///
+/// [allowsMultiple] when true, allows multiple selection.
+/// [defaultName] default file name for save dialog.
+///
+/// Return value:
+///   null: dialog closed / cancelled.
+///   When [allowsMultiple] is false, the list returned only has one item.
+Future<List<String>?> pick(MacosFilePickerMode mode,
+    {String? defaultName, bool? allowsMultiple});
+```
 
+## Example
+
+```dart
+final _macosFilePickerPlugin = MacosFilePicker();
+
+Future<void> _openDialog() async {
+  // Pick a single file path.
+  var result = await _macosFilePickerPlugin.pick(_mode,
+      allowsMultiple: _allowsMultiple);
+  setState(() {
+    _output = result == null ? 'Cancelled' : result.first;
+  });
+}
+```
