@@ -8,8 +8,7 @@ Opens native macOS dialogs to pick files or folders. Features:
 ## Usage
 
 ```dart
-///
-/// Open a macOS dialog based on the given arguments.
+/// Opens a macOS dialog based on the given arguments.
 ///
 /// [mode]:
 ///   file: pick files.
@@ -17,13 +16,14 @@ Opens native macOS dialogs to pick files or folders. Features:
 ///   fileAndFolder: pick files and folders.
 ///   saveFile: pick a file saving path.
 ///
-/// [allowsMultiple] when true, allows multiple selection.
+/// [allowsMultiple] when true, allows multiple selection. Default: false.
 /// [defaultName] default file name for save dialog.
 ///
 /// Return value:
-///   null: dialog closed / cancelled.
-///   When [allowsMultiple] is false, the list returned only has one item.
-Future<List<String>?> pick(MacosFilePickerMode mode,
+///   [null]: dialog closed / cancelled.
+///   A list of [MacosFilePickerPath] representing a platform path.
+///   When [allowsMultiple] is false, the list should only has one item.
+Future<List<MacosFilePickerPath>?> pick(MacosFilePickerMode mode,
     {String? defaultName, bool? allowsMultiple});
 ```
 
@@ -37,7 +37,7 @@ Future<void> _openDialog() async {
   var result = await _macosFilePickerPlugin.pick(_mode,
       allowsMultiple: _allowsMultiple);
   setState(() {
-    _output = result == null ? 'Cancelled' : result.first;
+    _output = result == null ? 'Cancelled' : result.toString();
   });
 }
 ```

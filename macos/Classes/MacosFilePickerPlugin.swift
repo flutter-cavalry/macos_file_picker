@@ -29,7 +29,7 @@ public class MacosFilePickerPlugin: NSObject, FlutterPlugin {
         let res = panel.runModal()
         if res == .OK {
           if let url = panel.url {
-            result([url.path])
+            result([urlToMap(url)])
           } else {
             result(nil)
           }
@@ -44,10 +44,10 @@ public class MacosFilePickerPlugin: NSObject, FlutterPlugin {
         let res = panel.runModal()
         if res == .OK {
           if (allowsMultiple) {
-            result(panel.urls.map{ $0.path })
+            result(panel.urls.map{ urlToMap($0) })
           } else {
             if let url = panel.url {
-              result([url.path])
+              result([urlToMap(url)])
             } else {
               result(nil)
             }
@@ -59,5 +59,9 @@ public class MacosFilePickerPlugin: NSObject, FlutterPlugin {
     default:
       result(FlutterMethodNotImplemented)
     }
+  }
+  
+  private func urlToMap(_ url: URL) -> [String: String] {
+    return ["uri": url.absoluteString, "path": url.path]
   }
 }
