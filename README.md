@@ -1,8 +1,10 @@
+# macos_file_picker
+
 [![pub package](https://img.shields.io/pub/v/macos_file_picker.svg)](https://pub.dev/packages/macos_file_picker)
 
 Opens native macOS dialogs to pick files or folders. Features:
 
-- Pick a single or multiple files, folders and both.
+- Pick files, folders or both.
 - Pick a file to save.
 
 ## Usage
