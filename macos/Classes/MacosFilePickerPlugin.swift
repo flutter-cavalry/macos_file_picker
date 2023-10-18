@@ -62,6 +62,6 @@ public class MacosFilePickerPlugin: NSObject, FlutterPlugin {
   }
   
   private func urlToMap(_ url: URL) -> [String: String] {
-    return ["uri": url.absoluteString, "path": url.path]
+    return ["url": url.absoluteString, "path": url.path]
   }
 }

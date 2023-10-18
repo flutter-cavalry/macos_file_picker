@@ -36,7 +36,7 @@ final _macosFilePickerPlugin = MacosFilePicker();
 
 Future<void> _openDialog() async {
   // Pick a single file path.
-  var result = await _macosFilePickerPlugin.pick(_mode,
+  final result = await _macosFilePickerPlugin.pick(_mode,
       allowsMultiple: _allowsMultiple);
   setState(() {
     _output = result == null ? 'Cancelled' : result.toString();

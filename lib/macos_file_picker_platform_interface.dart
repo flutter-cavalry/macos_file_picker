@@ -5,18 +5,18 @@ import 'macos_file_picker_method_channel.dart';
 enum MacosFilePickerMode { file, folder, fileAndFolder, saveFile }
 
 class MacosFilePickerPath {
-  final Uri uri;
+  final String url;
   final String path;
 
-  MacosFilePickerPath(this.uri, this.path);
+  MacosFilePickerPath(this.url, this.path);
 
   static MacosFilePickerPath fromMap(Map<dynamic, dynamic> map) {
-    return MacosFilePickerPath(Uri.parse(map['uri']), map['path']);
+    return MacosFilePickerPath(map['url'], map['path']);
   }
 
   @override
   String toString() {
-    return 'Uri: $uri | Path: $path';
+    return 'Url: $url | Path: $path';
   }
 }
 
