@@ -41,6 +41,7 @@ public class MacosFilePickerPlugin: NSObject, FlutterPlugin {
         panel.allowsMultipleSelection = allowsMultiple
         panel.canChooseFiles = mode == .file || mode == .fileAndFolder
         panel.canChooseDirectories = mode == .folder || mode == .fileAndFolder
+        panel.canCreateDirectories = mode == .folder || mode == .fileAndFolder
         let res = panel.runModal()
         if res == .OK {
           if (allowsMultiple) {
