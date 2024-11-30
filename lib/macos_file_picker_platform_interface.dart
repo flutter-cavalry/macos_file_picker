@@ -1,24 +1,7 @@
+import 'package:macos_file_picker/macos_file_picker.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'macos_file_picker_method_channel.dart';
-
-enum MacosFilePickerMode { file, folder, fileAndFolder, saveFile }
-
-class MacosFilePickerPath {
-  final String url;
-  final String path;
-
-  MacosFilePickerPath(this.url, this.path);
-
-  static MacosFilePickerPath fromMap(Map<dynamic, dynamic> map) {
-    return MacosFilePickerPath(map['url'], map['path']);
-  }
-
-  @override
-  String toString() {
-    return 'Url: $url | Path: $path';
-  }
-}
 
 abstract class MacosFilePickerPlatform extends PlatformInterface {
   /// Constructs a MacosFilePickerPlatform.

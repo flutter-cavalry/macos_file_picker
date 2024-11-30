@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:macos_file_picker/macos_file_picker.dart';
-import 'package:macos_file_picker/macos_file_picker_platform_interface.dart';
 
 void main() {
   runApp(const MyApp());

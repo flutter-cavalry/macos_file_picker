@@ -1,9 +1,32 @@
 import 'macos_file_picker_platform_interface.dart';
 
+enum MacosFilePickerMode { file, folder, fileAndFolder, saveFile }
+
+class MacosFilePickerPath {
+  final String url;
+  final String path;
+  final String name;
+
+  MacosFilePickerPath(this.url, this.path, this.name);
+
+  static MacosFilePickerPath fromMap(Map<dynamic, dynamic> map) {
+    return MacosFilePickerPath(
+      map['url'],
+      map['path'],
+      map['name'],
+    );
+  }
+
+  @override
+  String toString() {
+    return 'MacosFilePickerPath{name: $name, path: $path, url: $url}';
+  }
+}
+
 class MacosFilePicker {
   /// Opens a macOS dialog based on the given arguments.
   ///
-  /// [mode]:
+  /// [mode]
   ///   file: pick files.
   ///   folder: pick folders.
   ///   fileAndFolder: pick files and folders.

@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:macos_file_picker/macos_file_picker.dart';
 
 import 'macos_file_picker_platform_interface.dart';
 
