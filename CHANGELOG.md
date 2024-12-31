@@ -1,3 +1,7 @@
+## 0.5.0
+
+- Add Swift Package Manager support.
+
 ## 0.4.0
 
 - Add `name` to `MacosFilePickerPath`.
