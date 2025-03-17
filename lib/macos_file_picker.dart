@@ -36,6 +36,7 @@ class MacosFilePicker {
   /// [defaultName] default file name for save dialog.
   /// [allowedUtiTypes] allowed UTI types.
   /// [allowedFileExtensions] allowed file extensions.
+  /// [initialDirectory] initial directory. Can be a path or URL.
   ///
   /// Return value:
   ///   [null]: dialog closed / cancelled.
@@ -47,11 +48,13 @@ class MacosFilePicker {
     bool? allowsMultiple,
     List<String>? allowedUtiTypes,
     List<String>? allowedFileExtensions,
+    String? initialDirectory,
   }) {
     return MacosFilePickerPlatform.instance.pick(mode,
         defaultName: defaultName,
         allowsMultiple: allowsMultiple,
         allowedUtiTypes: allowedUtiTypes,
-        allowedFileExtensions: allowedFileExtensions);
+        allowedFileExtensions: allowedFileExtensions,
+        initialDirectory: initialDirectory);
   }
 }

@@ -1,5 +1,6 @@
 import Cocoa
 import FlutterMacOS
+import UniformTypeIdentifiers
 
 enum MacosFilePickerMode: Int { case file, folder, fileAndFolder, saveFile }
 
@@ -23,14 +24,37 @@ public class MacosFilePickerPlugin: NSObject, FlutterPlugin {
       let allowsMultiple = args["allowsMultiple"] as? Bool ?? false
       let allowedUtiTypes = args["allowedUtiTypes"] as? [String]
       let allowedFileExtensions = args["allowedFileExtensions"] as? [String]
+      let initialDirectory = args["initialDirectory"] as? String
+      var initialDirectoryURL: URL?
+      if let initialDirectory = initialDirectory {
+        if initialDirectory.contains("://") {
+          initialDirectoryURL = URL(string: initialDirectory)
+        } else {
+          initialDirectoryURL = URL(fileURLWithPath: initialDirectory)
+        }
+      }
 
-      let utTypes = allowedUtiTypes?.compactMap { UTType($0) }
 
       if mode == .saveFile {
         let panel = NSSavePanel()
         if let defaultName = args["defaultName"] as? String {
           panel.nameFieldStringValue = defaultName
         }
+        
+        if #available(macOS 11.0, *) {
+          let utTypes = allowedUtiTypes?.compactMap { UTType($0) }
+          if let utTypes = utTypes {
+            panel.allowedContentTypes = utTypes
+          }
+        }
+        
+        if let allowedFileExtensions = allowedFileExtensions {
+          panel.allowedFileTypes = allowedFileExtensions
+        }
+        if let initialDirectoryURL = initialDirectoryURL {
+          panel.directoryURL = initialDirectoryURL
+        }
+        
         let res = panel.runModal()
         if res == .OK {
           if let url = panel.url {
@@ -48,11 +72,17 @@ public class MacosFilePickerPlugin: NSObject, FlutterPlugin {
         panel.canChooseDirectories = mode == .folder || mode == .fileAndFolder
         panel.canCreateDirectories = mode == .folder || mode == .fileAndFolder
         
-        if let utTypes = utTypes {
-          panel.allowedContentTypes = utTypes
+        if #available(macOS 11.0, *) {
+          let utTypes = allowedUtiTypes?.compactMap { UTType($0) }
+          if let utTypes = utTypes {
+            panel.allowedContentTypes = utTypes
+          }
         }
         if let allowedFileExtensions = allowedFileExtensions {
           panel.allowedFileTypes = allowedFileExtensions
+        }
+        if let initialDirectoryURL = initialDirectoryURL {
+          panel.directoryURL = initialDirectoryURL
         }
         
         let res = panel.runModal()

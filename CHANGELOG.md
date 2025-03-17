@@ -1,3 +1,7 @@
+## 0.6.1
+
+- Add `initialDirectory`.
+
 ## 0.6.0
 
 - Add `allowedUtiTypes` and `allowedFileExtensions`.

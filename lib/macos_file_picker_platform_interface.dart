@@ -30,6 +30,7 @@ abstract class MacosFilePickerPlatform extends PlatformInterface {
     bool? allowsMultiple,
     List<String>? allowedUtiTypes,
     List<String>? allowedFileExtensions,
+    String? initialDirectory,
   }) {
     throw UnimplementedError('pick() has not been implemented.');
   }
