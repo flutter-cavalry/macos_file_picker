@@ -1,3 +1,7 @@
+## 0.6.0
+
+- Add `allowedUtiTypes` and `allowedFileExtensions`.
+
 ## 0.5.0
 
 - Add Swift Package Manager support.

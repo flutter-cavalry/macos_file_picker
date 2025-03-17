@@ -20,6 +20,8 @@ Opens native macOS dialogs to pick files or folders. Features:
 ///
 /// [allowsMultiple] when true, allows multiple selection. Default: false.
 /// [defaultName] default file name for save dialog.
+/// [allowedUtiTypes] allowed UTI types.
+/// [allowedFileExtensions] allowed file extensions.
 ///
 /// Return value:
 ///   [null]: dialog closed / cancelled.

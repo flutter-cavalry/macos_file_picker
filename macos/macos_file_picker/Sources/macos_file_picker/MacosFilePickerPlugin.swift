@@ -21,6 +21,10 @@ public class MacosFilePickerPlugin: NSObject, FlutterPlugin {
       // Arguments are enforced on dart side.
       let mode = MacosFilePickerMode(rawValue: args["mode"] as! Int)
       let allowsMultiple = args["allowsMultiple"] as? Bool ?? false
+      let allowedUtiTypes = args["allowedUtiTypes"] as? [String]
+      let allowedFileExtensions = args["allowedFileExtensions"] as? [String]
+
+      let utTypes = allowedUtiTypes?.compactMap { UTType($0) }
 
       if mode == .saveFile {
         let panel = NSSavePanel()
@@ -43,6 +47,14 @@ public class MacosFilePickerPlugin: NSObject, FlutterPlugin {
         panel.canChooseFiles = mode == .file || mode == .fileAndFolder
         panel.canChooseDirectories = mode == .folder || mode == .fileAndFolder
         panel.canCreateDirectories = mode == .folder || mode == .fileAndFolder
+        
+        if let utTypes = utTypes {
+          panel.allowedContentTypes = utTypes
+        }
+        if let allowedFileExtensions = allowedFileExtensions {
+          panel.allowedFileTypes = allowedFileExtensions
+        }
+        
         let res = panel.runModal()
         if res == .OK {
           if allowsMultiple {

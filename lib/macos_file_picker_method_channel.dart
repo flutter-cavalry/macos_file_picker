@@ -11,13 +11,20 @@ class MethodChannelMacosFilePicker extends MacosFilePickerPlatform {
   final methodChannel = const MethodChannel('macos_file_picker');
 
   @override
-  Future<List<MacosFilePickerPath>?> pick(MacosFilePickerMode mode,
-      {String? defaultName, bool? allowsMultiple}) async {
-    var maps = await methodChannel.invokeListMethod<Map<dynamic, dynamic>>(
-        'pick', {
+  Future<List<MacosFilePickerPath>?> pick(
+    MacosFilePickerMode mode, {
+    String? defaultName,
+    bool? allowsMultiple,
+    List<String>? allowedUtiTypes,
+    List<String>? allowedFileExtensions,
+  }) async {
+    var maps =
+        await methodChannel.invokeListMethod<Map<dynamic, dynamic>>('pick', {
       'mode': mode.index,
       'defaultName': defaultName,
-      'allowsMultiple': allowsMultiple
+      'allowsMultiple': allowsMultiple,
+      'allowedUtiTypes': allowedUtiTypes,
+      'allowedFileExtensions': allowedFileExtensions,
     });
     if (maps == null) {
       return null;

@@ -34,14 +34,24 @@ class MacosFilePicker {
   ///
   /// [allowsMultiple] when true, allows multiple selection. Default: false.
   /// [defaultName] default file name for save dialog.
+  /// [allowedUtiTypes] allowed UTI types.
+  /// [allowedFileExtensions] allowed file extensions.
   ///
   /// Return value:
   ///   [null]: dialog closed / cancelled.
   ///   A list of [MacosFilePickerPath] representing a platform path.
   ///   When [allowsMultiple] is false, the list should only has one item.
-  Future<List<MacosFilePickerPath>?> pick(MacosFilePickerMode mode,
-      {String? defaultName, bool? allowsMultiple}) {
-    return MacosFilePickerPlatform.instance
-        .pick(mode, defaultName: defaultName, allowsMultiple: allowsMultiple);
+  Future<List<MacosFilePickerPath>?> pick(
+    MacosFilePickerMode mode, {
+    String? defaultName,
+    bool? allowsMultiple,
+    List<String>? allowedUtiTypes,
+    List<String>? allowedFileExtensions,
+  }) {
+    return MacosFilePickerPlatform.instance.pick(mode,
+        defaultName: defaultName,
+        allowsMultiple: allowsMultiple,
+        allowedUtiTypes: allowedUtiTypes,
+        allowedFileExtensions: allowedFileExtensions);
   }
 }
