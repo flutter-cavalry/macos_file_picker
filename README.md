@@ -12,7 +12,7 @@ Opens native macOS dialogs to pick files or folders. Features:
 ```dart
 /// Opens a macOS dialog based on the given arguments.
 ///
-/// [mode]:
+/// [mode]
 ///   file: pick files.
 ///   folder: pick folders.
 ///   fileAndFolder: pick files and folders.
@@ -22,13 +22,22 @@ Opens native macOS dialogs to pick files or folders. Features:
 /// [defaultName] default file name for save dialog.
 /// [allowedUtiTypes] allowed UTI types.
 /// [allowedFileExtensions] allowed file extensions.
+/// [initialDirectory] initial directory. Can be a path or URL.
+/// [dialogTitle] title of the dialog window.
 ///
 /// Return value:
 ///   [null]: dialog closed / cancelled.
 ///   A list of [MacosFilePickerPath] representing a platform path.
 ///   When [allowsMultiple] is false, the list should only has one item.
-Future<List<MacosFilePickerPath>?> pick(MacosFilePickerMode mode,
-    {String? defaultName, bool? allowsMultiple});
+Future<List<MacosFilePickerPath>?> pick(
+  MacosFilePickerMode mode, {
+  String? defaultName,
+  bool? allowsMultiple,
+  List<String>? allowedUtiTypes,
+  List<String>? allowedFileExtensions,
+  String? initialDirectory,
+  String? dialogTitle,
+});
 ```
 
 ## Example

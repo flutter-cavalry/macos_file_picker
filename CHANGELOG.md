@@ -1,3 +1,7 @@
+## 0.7.1
+
+- Allow setting dialog title.
+
 ## 0.6.1
 
 - Add `initialDirectory`.

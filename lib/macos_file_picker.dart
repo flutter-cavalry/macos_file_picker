@@ -37,6 +37,7 @@ class MacosFilePicker {
   /// [allowedUtiTypes] allowed UTI types.
   /// [allowedFileExtensions] allowed file extensions.
   /// [initialDirectory] initial directory. Can be a path or URL.
+  /// [dialogTitle] title of the dialog window.
   ///
   /// Return value:
   ///   [null]: dialog closed / cancelled.
