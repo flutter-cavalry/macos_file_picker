@@ -49,12 +49,16 @@ class MacosFilePicker {
     List<String>? allowedUtiTypes,
     List<String>? allowedFileExtensions,
     String? initialDirectory,
+    String? dialogTitle,
   }) {
-    return MacosFilePickerPlatform.instance.pick(mode,
-        defaultName: defaultName,
-        allowsMultiple: allowsMultiple,
-        allowedUtiTypes: allowedUtiTypes,
-        allowedFileExtensions: allowedFileExtensions,
-        initialDirectory: initialDirectory);
+    return MacosFilePickerPlatform.instance.pick(
+      mode,
+      defaultName: defaultName,
+      allowsMultiple: allowsMultiple,
+      allowedUtiTypes: allowedUtiTypes,
+      allowedFileExtensions: allowedFileExtensions,
+      initialDirectory: initialDirectory,
+      dialogTitle: dialogTitle,
+    );
   }
 }

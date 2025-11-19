@@ -18,6 +18,7 @@ class MethodChannelMacosFilePicker extends MacosFilePickerPlatform {
     List<String>? allowedUtiTypes,
     List<String>? allowedFileExtensions,
     String? initialDirectory,
+    String? dialogTitle,
   }) async {
     var maps =
         await methodChannel.invokeListMethod<Map<dynamic, dynamic>>('pick', {
@@ -27,6 +28,7 @@ class MethodChannelMacosFilePicker extends MacosFilePickerPlatform {
       'allowedUtiTypes': allowedUtiTypes,
       'allowedFileExtensions': allowedFileExtensions,
       'initialDirectory': initialDirectory,
+      'dialogTitle': dialogTitle,
     });
     if (maps == null) {
       return null;

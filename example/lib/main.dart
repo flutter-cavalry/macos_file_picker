@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:macos_file_picker/macos_file_picker.dart';
 
 void main() {
@@ -79,8 +79,11 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> _pick() async {
-    var result = await _macosFilePickerPlugin.pick(_mode,
-        allowsMultiple: _allowsMultiple);
+    var result = await _macosFilePickerPlugin.pick(
+      _mode,
+      allowsMultiple: _allowsMultiple,
+      dialogTitle: 'Custom Dialog Title',
+    );
     setState(() {
       _output = result == null ? 'Cancelled' : result.toString();
     });

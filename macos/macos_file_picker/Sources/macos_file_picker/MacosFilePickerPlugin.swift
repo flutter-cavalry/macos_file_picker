@@ -25,6 +25,8 @@ public class MacosFilePickerPlugin: NSObject, FlutterPlugin {
       let allowedUtiTypes = args["allowedUtiTypes"] as? [String]
       let allowedFileExtensions = args["allowedFileExtensions"] as? [String]
       let initialDirectory = args["initialDirectory"] as? String
+      let dialogTitle = args["dialogTitle"] as? String
+      
       var initialDirectoryURL: URL?
       if let initialDirectory = initialDirectory {
         if initialDirectory.contains("://") {
@@ -53,6 +55,9 @@ public class MacosFilePickerPlugin: NSObject, FlutterPlugin {
         }
         if let initialDirectoryURL = initialDirectoryURL {
           panel.directoryURL = initialDirectoryURL
+        }
+        if let dialogTitle = dialogTitle {
+          panel.title = dialogTitle
         }
         
         let res = panel.runModal()
@@ -83,6 +88,9 @@ public class MacosFilePickerPlugin: NSObject, FlutterPlugin {
         }
         if let initialDirectoryURL = initialDirectoryURL {
           panel.directoryURL = initialDirectoryURL
+        }
+        if let dialogTitle = dialogTitle {
+          panel.title = dialogTitle
         }
         
         let res = panel.runModal()
