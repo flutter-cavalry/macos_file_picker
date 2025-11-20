@@ -90,7 +90,7 @@ public class MacosFilePickerPlugin: NSObject, FlutterPlugin {
           panel.directoryURL = initialDirectoryURL
         }
         if let dialogTitle = dialogTitle {
-          panel.title = dialogTitle
+          panel.message = dialogTitle
         }
         
         let res = panel.runModal()
