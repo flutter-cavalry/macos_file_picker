@@ -93,19 +93,21 @@ public class MacosFilePickerPlugin: NSObject, FlutterPlugin {
           panel.message = dialogTitle
         }
         
-        let res = panel.runModal()
-        if res == .OK {
-          if allowsMultiple {
-            result(panel.urls.map { urlToMap($0) })
-          } else {
-            if let url = panel.url {
-              result([urlToMap(url)])
+        guard let targetWindow = NSApp.mainWindow else { return }
+        panel.beginSheetModal(for: targetWindow) { res in
+          if res == .OK {
+            if allowsMultiple {
+              result(panel.urls.map { self.urlToMap($0) })
             } else {
-              result(nil)
+              if let url = panel.url {
+                result([self.urlToMap(url)])
+              } else {
+                result(nil)
+              }
             }
+          } else {
+            result(nil)
           }
-        } else {
-          result(nil)
         }
       }
     default:
