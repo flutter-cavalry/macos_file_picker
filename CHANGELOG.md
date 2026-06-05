@@ -1,3 +1,7 @@
+## 0.7.3
+
+- Switch to async open file modals.
+
 ## 0.7.1
 
 - Allow setting dialog title.
