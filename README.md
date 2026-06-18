@@ -9,6 +9,20 @@ Opens native macOS dialogs to pick files or folders. Features:
 
 ## Usage
 
+You need to add an entitlement (`DebugProfile.entitlements` or `Release.entitlements`) for either read-only access:
+
+```xml
+  <key>com.apple.security.files.user-selected.read-only</key>
+  <true/>
+```
+
+or read-write access:
+
+```xml
+  <key>com.apple.security.files.user-selected.read-write</key>
+  <true/>
+```
+
 ```dart
 /// Opens a macOS dialog based on the given arguments.
 ///
