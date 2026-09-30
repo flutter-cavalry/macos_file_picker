@@ -1,3 +1,9 @@
+## 1.0.0
+
+- Initial stable release.
+- Bump min macOS version to 11.0
+- Bump min Flutter SDK version to 3.44.0
+
 ## 0.7.3
 
 - Switch to async open file modals.

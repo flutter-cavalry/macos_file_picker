@@ -26,7 +26,7 @@ public class MacosFilePickerPlugin: NSObject, FlutterPlugin {
       let allowedFileExtensions = args["allowedFileExtensions"] as? [String]
       let initialDirectory = args["initialDirectory"] as? String
       let dialogTitle = args["dialogTitle"] as? String
-      
+
       var initialDirectoryURL: URL?
       if let initialDirectory = initialDirectory {
         if initialDirectory.contains("://") {
@@ -36,20 +36,17 @@ public class MacosFilePickerPlugin: NSObject, FlutterPlugin {
         }
       }
 
-
       if mode == .saveFile {
         let panel = NSSavePanel()
         if let defaultName = args["defaultName"] as? String {
           panel.nameFieldStringValue = defaultName
         }
-        
-        if #available(macOS 11.0, *) {
-          let utTypes = allowedUtiTypes?.compactMap { UTType($0) }
-          if let utTypes = utTypes {
-            panel.allowedContentTypes = utTypes
-          }
+
+        let utTypes = allowedUtiTypes?.compactMap { UTType($0) }
+        if let utTypes = utTypes {
+          panel.allowedContentTypes = utTypes
         }
-        
+
         if let allowedFileExtensions = allowedFileExtensions {
           panel.allowedFileTypes = allowedFileExtensions
         }
@@ -59,7 +56,7 @@ public class MacosFilePickerPlugin: NSObject, FlutterPlugin {
         if let dialogTitle = dialogTitle {
           panel.title = dialogTitle
         }
-        
+
         let res = panel.runModal()
         if res == .OK {
           if let url = panel.url {
@@ -76,12 +73,10 @@ public class MacosFilePickerPlugin: NSObject, FlutterPlugin {
         panel.canChooseFiles = mode == .file || mode == .fileAndFolder
         panel.canChooseDirectories = mode == .folder || mode == .fileAndFolder
         panel.canCreateDirectories = mode == .folder || mode == .fileAndFolder
-        
-        if #available(macOS 11.0, *) {
-          let utTypes = allowedUtiTypes?.compactMap { UTType($0) }
-          if let utTypes = utTypes {
-            panel.allowedContentTypes = utTypes
-          }
+
+        let utTypes = allowedUtiTypes?.compactMap { UTType($0) }
+        if let utTypes = utTypes {
+          panel.allowedContentTypes = utTypes
         }
         if let allowedFileExtensions = allowedFileExtensions {
           panel.allowedFileTypes = allowedFileExtensions
@@ -92,8 +87,13 @@ public class MacosFilePickerPlugin: NSObject, FlutterPlugin {
         if let dialogTitle = dialogTitle {
           panel.message = dialogTitle
         }
-        
-        guard let targetWindow = NSApp.mainWindow else { return }
+
+        guard let targetWindow = NSApp.mainWindow else {
+          result(
+            FlutterError(
+              code: "NoMainWindow", message: "No main window is available", details: nil))
+          return
+        }
         panel.beginSheetModal(for: targetWindow) { res in
           if res == .OK {
             if allowsMultiple {
