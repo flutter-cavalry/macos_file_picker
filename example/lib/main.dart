@@ -84,8 +84,16 @@ class _MyAppState extends State<MyApp> {
       allowsMultiple: _allowsMultiple,
       dialogTitle: 'Custom Dialog Title',
     );
-    setState(() {
-      _output = result == null ? 'Cancelled' : result.toString();
-    });
+    try {
+      if (mounted) {
+        setState(() {
+          _output = result == null ? 'Cancelled' : result.toString();
+        });
+      }
+    } finally {
+      if (result != null) {
+        await Future.wait(result.map((path) => path.release()));
+      }
+    }
   }
 }

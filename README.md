@@ -23,6 +23,11 @@ or read-write access:
   <true/>
 ```
 
+The picker starts security-scoped access when macOS grants it for a selected URL.
+Call `await path.release()` on each returned `MacosFilePickerPath` after you finish
+using it (including after file operations fail). Releasing a path without scoped
+access has no effect.
+
 ```dart
 /// Opens a macOS dialog based on the given arguments.
 ///
@@ -60,11 +65,18 @@ Future<List<MacosFilePickerPath>?> pick(
 final _macosFilePickerPlugin = MacosFilePicker();
 
 Future<void> _openDialog() async {
-  // Pick a single file path.
   final result = await _macosFilePickerPlugin.pick(_mode,
       allowsMultiple: _allowsMultiple);
-  setState(() {
-    _output = result == null ? 'Cancelled' : result.toString();
-  });
+  try {
+    if (mounted) {
+      setState(() {
+        _output = result == null ? 'Cancelled' : result.toString();
+      });
+    }
+  } finally {
+    if (result != null) {
+      await Future.wait(result.map((path) => path.release()));
+    }
+  }
 }
 ```

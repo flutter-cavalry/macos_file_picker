@@ -1,3 +1,7 @@
+## 2.0.0
+
+- **Breaking:** Picker results now start security-scoped access automatically when macOS grants it. You need to call `await path.release()` on every returned `MacosFilePickerPath` after use.
+
 ## 1.0.0
 
 - Initial stable release.

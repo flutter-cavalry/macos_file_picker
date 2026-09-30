@@ -5,6 +5,8 @@ import UniformTypeIdentifiers
 enum MacosFilePickerMode: Int { case file, folder, fileAndFolder, saveFile }
 
 public class MacosFilePickerPlugin: NSObject, FlutterPlugin {
+  private var scopedURLs: [String: URL] = [:]
+
   public static func register(with registrar: FlutterPluginRegistrar) {
     let channel = FlutterMethodChannel(
       name: "macos_file_picker", binaryMessenger: registrar.messenger)
@@ -110,12 +112,25 @@ public class MacosFilePickerPlugin: NSObject, FlutterPlugin {
           }
         }
       }
+    case "release":
+      if let token = args["token"] as? String, let url = scopedURLs.removeValue(forKey: token) {
+        url.stopAccessingSecurityScopedResource()
+      }
+      result(nil)
     default:
       result(FlutterMethodNotImplemented)
     }
   }
 
-  private func urlToMap(_ url: URL) -> [String: String] {
-    return ["url": url.absoluteString, "path": url.path, "name": url.lastPathComponent]
+  private func urlToMap(_ url: URL) -> [String: Any] {
+    var map: [String: Any] = [
+      "url": url.absoluteString, "path": url.path, "name": url.lastPathComponent,
+    ]
+    if url.startAccessingSecurityScopedResource() {
+      let token = UUID().uuidString
+      scopedURLs[token] = url
+      map["token"] = token
+    }
+    return map
   }
 }

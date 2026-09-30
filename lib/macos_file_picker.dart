@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+
 import 'macos_file_picker_platform_interface.dart';
 
 enum MacosFilePickerMode { file, folder, fileAndFolder, saveFile }
@@ -6,15 +8,40 @@ class MacosFilePickerPath {
   final String url;
   final String path;
   final String name;
+  String? _token;
+  Future<void>? _releaseFuture;
 
-  MacosFilePickerPath(this.url, this.path, this.name);
+  MacosFilePickerPath(this.url, this.path, this.name) : _token = null;
+
+  MacosFilePickerPath._(this.url, this.path, this.name, this._token);
 
   static MacosFilePickerPath fromMap(Map<dynamic, dynamic> map) {
-    return MacosFilePickerPath(
+    return MacosFilePickerPath._(
       map['url'],
       map['path'],
       map['name'],
+      map['token'],
     );
+  }
+
+  /// Releases security-scoped access acquired for this picker result.
+  /// Call after finishing access to the selected file or directory.
+  Future<void> release() {
+    if (_token == null) {
+      return Future.value();
+    }
+    return _releaseFuture ??= _release();
+  }
+
+  Future<void> _release() async {
+    try {
+      await const MethodChannel(
+        'macos_file_picker',
+      ).invokeMethod<void>('release', {'token': _token});
+      _token = null;
+    } finally {
+      _releaseFuture = null;
+    }
   }
 
   @override
