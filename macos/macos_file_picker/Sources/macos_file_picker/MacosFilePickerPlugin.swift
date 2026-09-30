@@ -28,6 +28,13 @@ public class MacosFilePickerPlugin: NSObject, FlutterPlugin {
       let allowedFileExtensions = args["allowedFileExtensions"] as? [String]
       let initialDirectory = args["initialDirectory"] as? String
       let dialogTitle = args["dialogTitle"] as? String
+      let utiTypes = allowedUtiTypes?.compactMap { UTType($0) }
+      let contentTypes: [UTType]?
+      if let allowedFileExtensions = allowedFileExtensions {
+        contentTypes = allowedFileExtensions.compactMap { UTType(filenameExtension: $0) }
+      } else {
+        contentTypes = utiTypes
+      }
 
       var initialDirectoryURL: URL?
       if let initialDirectory = initialDirectory {
@@ -44,13 +51,8 @@ public class MacosFilePickerPlugin: NSObject, FlutterPlugin {
           panel.nameFieldStringValue = defaultName
         }
 
-        let utTypes = allowedUtiTypes?.compactMap { UTType($0) }
-        if let utTypes = utTypes {
-          panel.allowedContentTypes = utTypes
-        }
-
-        if let allowedFileExtensions = allowedFileExtensions {
-          panel.allowedFileTypes = allowedFileExtensions
+        if let contentTypes = contentTypes {
+          panel.allowedContentTypes = contentTypes
         }
         if let initialDirectoryURL = initialDirectoryURL {
           panel.directoryURL = initialDirectoryURL
@@ -76,12 +78,8 @@ public class MacosFilePickerPlugin: NSObject, FlutterPlugin {
         panel.canChooseDirectories = mode == .folder || mode == .fileAndFolder
         panel.canCreateDirectories = mode == .folder || mode == .fileAndFolder
 
-        let utTypes = allowedUtiTypes?.compactMap { UTType($0) }
-        if let utTypes = utTypes {
-          panel.allowedContentTypes = utTypes
-        }
-        if let allowedFileExtensions = allowedFileExtensions {
-          panel.allowedFileTypes = allowedFileExtensions
+        if let contentTypes = contentTypes {
+          panel.allowedContentTypes = contentTypes
         }
         if let initialDirectoryURL = initialDirectoryURL {
           panel.directoryURL = initialDirectoryURL

@@ -62,7 +62,8 @@ class MacosFilePicker {
   /// [allowsMultiple] when true, allows multiple selection. Default: false.
   /// [defaultName] default file name for save dialog.
   /// [allowedUtiTypes] allowed UTI types.
-  /// [allowedFileExtensions] allowed file extensions.
+  /// [allowedFileExtensions] deprecated; use [allowedUtiTypes] instead.
+  /// When both are provided, file extensions take precedence.
   /// [initialDirectory] initial directory. Can be a path or URL.
   /// [dialogTitle] title of the dialog window.
   ///
@@ -75,6 +76,7 @@ class MacosFilePicker {
     String? defaultName,
     bool? allowsMultiple,
     List<String>? allowedUtiTypes,
+    @Deprecated('Use allowedUtiTypes instead.')
     List<String>? allowedFileExtensions,
     String? initialDirectory,
     String? dialogTitle,

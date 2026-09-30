@@ -1,6 +1,8 @@
 ## 2.0.0
 
 - **Breaking:** Picker results now start security-scoped access automatically when macOS grants it. You need to call `await path.release()` on every returned `MacosFilePickerPath` after use.
+- **Breaking:** Raise the minimum macOS version to 12.0.
+- Use `allowedContentTypes` for filename extension filters instead of the deprecated `allowedFileTypes` API; deprecate `allowedFileExtensions` in favor of `allowedUtiTypes`.
 
 ## 1.0.0
 

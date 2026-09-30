@@ -29,6 +29,7 @@ abstract class MacosFilePickerPlatform extends PlatformInterface {
     String? defaultName,
     bool? allowsMultiple,
     List<String>? allowedUtiTypes,
+    @Deprecated('Use allowedUtiTypes instead.')
     List<String>? allowedFileExtensions,
     String? initialDirectory,
     String? dialogTitle,
